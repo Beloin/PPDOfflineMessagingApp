@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/home/beloin/Documents/aulas/11_sem/message_project/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/beloin/Documents/aulas/11_sem/message_project/build/message_app_autogen/include -isystem /usr/include/qt -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtWidgets -fPIC -o CMakeFiles/message_app.dir/message_app_autogen/mocs_compilation.cpp.o -c /home/beloin/Documents/aulas/11_sem/message_project/build/message_app_autogen/mocs_compilation.cpp",
+  "file": "/home/beloin/Documents/aulas/11_sem/message_project/build/message_app_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/message_app.dir/message_app_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/beloin/Documents/aulas/11_sem/message_project/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/beloin/Documents/aulas/11_sem/message_project/build/message_app_autogen/include -isystem /usr/include/qt -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtWidgets -fPIC -o CMakeFiles/message_app.dir/main.cpp.o -c /home/beloin/Documents/aulas/11_sem/message_project/main.cpp",
+  "file": "/home/beloin/Documents/aulas/11_sem/message_project/main.cpp",
+  "output": "CMakeFiles/message_app.dir/main.cpp.o"
+},
+{
+  "directory": "/home/beloin/Documents/aulas/11_sem/message_project/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/beloin/Documents/aulas/11_sem/message_project/build/message_app_autogen/include -isystem /usr/include/qt -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtWidgets -fPIC -o CMakeFiles/message_app.dir/ApplicationMain.cpp.o -c /home/beloin/Documents/aulas/11_sem/message_project/ApplicationMain.cpp",
+  "file": "/home/beloin/Documents/aulas/11_sem/message_project/ApplicationMain.cpp",
+  "output": "CMakeFiles/message_app.dir/ApplicationMain.cpp.o"
+}
+]
