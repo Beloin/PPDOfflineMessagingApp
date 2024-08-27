@@ -15,4 +15,4 @@ If Client B is offline, the messages sent from the online Client A will be sent 
 Clients in C++QT using a straightforward implementation
 
 # Server + Message Broker
-Server will be implemented in * and Message broker will be ActiveMQ/RabbitMQ 
+Server will be implemented in (Python, Elixir or Java) and Message broker will be ActiveMQ/RabbitMQ 
