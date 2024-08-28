@@ -15,15 +15,14 @@ find_package(Qt5 COMPONENTS
 
 # add_subdirectory(ui)
 # add_subdirectory(Game)
-# add_subdirectory(network)
+add_subdirectory(network)
 
 add_executable(message_app main.cpp ApplicationMain.cpp ApplicationMain.h)
 target_link_libraries(message_app
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
-        ui game_lib network_lib
-        rpc
+        network_lib
 )
 
 
