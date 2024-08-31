@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////
-// File:        QTChat.hpp
+// File:        QTContacts.hpp
 // Author:      MyName
 // Description:
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef UI_QTCHAT_H
-#define UI_QTCHAT_H
+#ifndef UI_QTCONTACTS_H
+#define UI_QTCONTACTS_H
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <QLineEdit>
@@ -15,27 +15,21 @@ namespace Ui {
 
 //------------------------------------------------------------------------------
 
-class QTChat : public QVBoxLayout {
+class QTContacts : public QVBoxLayout {
 
 public:
-  QTChat();
-  ~QTChat();
-
-  QListWidget *listView;
-
-  void sendMessage();
-
-  void addUserMessage(const std::string &);
-
-  void addOtherMessage(const std::string &msg);
-
-  void clearAll();
+  QTContacts();
+  ~QTContacts();
 
 private:
+  QListWidget *listView;
   QLineEdit *lineEdit;
+
+  void handleContacts();
+  void addContact(std::string const &);
 };
 
 //------------------------------------------------------------------------------
 
 } // namespace Ui
-#endif /* UI_QTCHAT_H */
+#endif /* UI_QTCONTACTS_H */

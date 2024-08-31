@@ -6,6 +6,8 @@
 #ifndef TEST_QT5_APPLICATIONMAIN_H
 #define TEST_QT5_APPLICATIONMAIN_H
 
+#include "ui/QTChat.hpp"
+#include "ui/QTContacts.hpp"
 #include <QLabel>
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -15,6 +17,8 @@ class ApplicationMain : public QMainWindow {
 
 private:
   bool connectionDialog();
+  Ui::QTChat *pChat;
+  Ui::QTContacts *pContacts;
 
 public:
   explicit ApplicationMain(QWidget *parent = Q_NULLPTR);

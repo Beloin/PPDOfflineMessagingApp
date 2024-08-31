@@ -10,6 +10,10 @@ If both client are online, messages sent from one to another will be proxied by 
 ## One Client offline
 If Client B is offline, the messages sent from the online Client A will be sent to Message Broker. When the client B is online again, all messages in broker will be sent to the now online Client B. 
 
+# Contacts
+
+Each client have a contacts list, showing saved contacts within the application to easily connect.
+
 # Clients
 
 Clients in C++QT using a straightforward implementation

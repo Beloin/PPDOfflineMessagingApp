@@ -1,4 +1,5 @@
 #include "ApplicationMain.h"
+#include "ui/QTContacts.hpp"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QDir>
@@ -12,7 +13,8 @@
 #include <QPushButton>
 
 ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
-  setFixedSize(1200, 800);
+  // setFixedSize(1200, 800);
+  setFixedSize(720, 480);
   setLayoutDirection(Qt::RightToLeft);
   auto scene = new QGraphicsScene{this};
   auto button = new QPushButton("Connect");
@@ -25,6 +27,10 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   vbox->addItem(hbox);
 
   auto mainHorizontalBox = new QHBoxLayout();
+  pChat = new Ui::QTChat();
+  pContacts = new Ui::QTContacts();
+  mainHorizontalBox->addItem(pChat);
+  mainHorizontalBox->addItem(pContacts);
   mainHorizontalBox->addItem(vbox);
 
   mainWidget->setLayout(mainHorizontalBox);
