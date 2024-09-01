@@ -28,6 +28,8 @@ private:
 
   void handleContacts();
   void addContact(std::string const &);
+
+  void onContactClick(QListWidgetItem *);
 };
 
 //------------------------------------------------------------------------------

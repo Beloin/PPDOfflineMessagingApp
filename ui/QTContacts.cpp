@@ -3,11 +3,16 @@
 #include <QAbstractButton>
 #include <QLineEdit>
 #include <QPushButton>
+#include <iostream>
+#include <qlistwidget.h>
 
 using namespace Ui;
 
 QTContacts::QTContacts() {
   listView = new QListWidget();
+  connect(listView, &QListWidget::itemClicked, this,
+          &QTContacts::onContactClick);
+
   auto *itemO1 = new QListWidgetItem("Add contact \"name,host[,port]\" ");
   itemO1->setBackground(Qt::lightGray);
   itemO1->setTextAlignment(Qt::AlignCenter);
@@ -51,4 +56,15 @@ void QTContacts::addContact(std::string const &value) {
   message->setBackground(QColor(0x96, 0x96, 0xFF));
   message->setTextAlignment(Qt::AlignLeft);
   listView->addItem(message);
+}
+
+void QTContacts::onContactClick(QListWidgetItem *item) {
+  if (listView->item(0) == item) {
+    std::cout << "Cannot change first item" << std::endl;
+    return;
+  }
+
+  // TODO: Here change the chat item
+  std::cout << "Hello From " << "ui/QTContacts.cpp" << std::endl;
+  item->setText("You clicked me!");
 }

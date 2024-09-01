@@ -27,6 +27,7 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   vbox->addItem(hbox);
 
   auto mainHorizontalBox = new QHBoxLayout();
+  // TODO: Create a way to change chats when clicked in contacts -> onContactClick
   pChat = new Ui::QTChat();
   pContacts = new Ui::QTContacts();
   mainHorizontalBox->addItem(pChat);
