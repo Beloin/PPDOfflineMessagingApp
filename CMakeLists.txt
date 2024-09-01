@@ -13,10 +13,10 @@ find_package(Qt5 COMPONENTS
         Widgets
         REQUIRED)
 
-# add_subdirectory(Game)
 add_subdirectory(ui)
 add_subdirectory(network)
 add_subdirectory(utils)
+add_subdirectory(chat)
 
 add_executable(message_app main.cpp ApplicationMain.cpp ApplicationMain.h)
 target_link_libraries(message_app
@@ -26,6 +26,7 @@ target_link_libraries(message_app
         network_lib
         ui
         utils
+        chatlib
 )
 
 

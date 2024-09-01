@@ -6,29 +6,33 @@
 #define TWAMP_CLIENT_H
 
 #include <string>
+#include <sys/types.h>
 
 namespace Network {
-    class Client {
+class Client {
 
-    protected:
-        bool hasConnected = false;
-        int server_fd{};
+protected:
+  bool hasConnected = false;
+  int server_fd{};
 
-        std::string server_addr;
+  std::string server_addr;
 
-    private:
-        int ConnectToServer(std::string const &host, std::string const &port);
+  ssize_t internalSendBytes(std::string const &value, size_t size);
+  ssize_t internalReadBytes(unsigned char *buf, size_t n);
 
-    public:
-        int ConnectTo(std::string const &host, std::string const &port);
+private:
+  int ConnectToServer(std::string const &host, std::string const &port);
 
-        [[nodiscard]] bool IsConnected() const;
+public:
+  int ConnectTo(std::string const &host, std::string const &port);
 
-        virtual ~Client();
+  [[nodiscard]] bool IsConnected() const;
 
-        void disconnect();
-    };
+  virtual ~Client();
 
-}
+  void disconnect();
+};
 
-#endif //TWAMP_CLIENT_H
+} // namespace Network
+
+#endif // TWAMP_CLIENT_H
