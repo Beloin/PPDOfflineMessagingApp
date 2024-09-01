@@ -27,6 +27,8 @@ private:
   QLineEdit *lineEdit;
 
   void handleContacts();
+  // TODO: Use ContactService to save
+  // contacts as a list of those, and referecing them with some id
   void addContact(std::string const &);
 
   void onContactClick(QListWidgetItem *);
