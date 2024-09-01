@@ -15,6 +15,7 @@ namespace Ui {
 
 //------------------------------------------------------------------------------
 
+// TODO: Create a chat to each contact in order to save all chats
 class QTChat : public QVBoxLayout {
 
 public:

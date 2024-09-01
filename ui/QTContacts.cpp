@@ -1,4 +1,5 @@
 #include "QTContacts.hpp"
+#include "split.hpp"
 #include <QAbstractButton>
 #include <QLineEdit>
 #include <QPushButton>
@@ -7,7 +8,7 @@ using namespace Ui;
 
 QTContacts::QTContacts() {
   listView = new QListWidget();
-  auto *itemO1 = new QListWidgetItem("Add contact \"name,host[,port]\"");
+  auto *itemO1 = new QListWidgetItem("Add contact \"name,host[,port]\" ");
   itemO1->setBackground(Qt::lightGray);
   itemO1->setTextAlignment(Qt::AlignCenter);
   listView->addItem(itemO1);
@@ -22,6 +23,7 @@ QTContacts::QTContacts() {
   auto hbox = new QHBoxLayout();
   hbox->setDirection(LeftToRight);
   hbox->addWidget(lineEdit);
+  hbox->addWidget(button);
   QBoxLayout::addItem(hbox);
 }
 
@@ -44,5 +46,9 @@ void QTContacts::handleContacts() {
 }
 
 void QTContacts::addContact(std::string const &value) {
-  
+  auto vars = split(value, ",");
+  auto *message = new QListWidgetItem(QString::fromStdString(value));
+  message->setBackground(QColor(0x96, 0x96, 0xFF));
+  message->setTextAlignment(Qt::AlignLeft);
+  listView->addItem(message);
 }

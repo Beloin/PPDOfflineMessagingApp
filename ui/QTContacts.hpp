@@ -15,6 +15,7 @@ namespace Ui {
 
 //------------------------------------------------------------------------------
 
+// TODO: Create contact selection
 class QTContacts : public QVBoxLayout {
 
 public:

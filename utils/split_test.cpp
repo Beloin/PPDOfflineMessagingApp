@@ -10,7 +10,7 @@ std::ostream &operator<<(std::ostream &os, const std::vector<T> &v) {
        ++ii) {
     os << " " << *ii;
   }
-  os << "]";
+  os << " ]";
   return os;
 }
 int main() {
