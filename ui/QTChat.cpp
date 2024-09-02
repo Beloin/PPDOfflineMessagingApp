@@ -1,11 +1,14 @@
 #include "QTChat.hpp"
+#include "MessageService.hpp"
 #include <QAbstractButton>
 #include <QLineEdit>
 #include <QPushButton>
+#include <string>
 
 using namespace Ui;
 
-QTChat::QTChat() {
+QTChat::QTChat(Chat::MessageService &messageService)
+    : messageService(messageService) {
   listView = new QListWidget();
   auto *itemO1 = new QListWidgetItem("Write message");
   itemO1->setBackground(Qt::lightGray);
@@ -50,7 +53,9 @@ void QTChat::sendMessage() {
   const std::string &basicString = string.toStdString();
   addUserMessage(basicString);
 
-  // TODO: Create something here
+  // TODO: Add contact as constructor parameter
+  std::string contact{"mycontact"};
+  messageService.addMessage(contact, basicString);
 
   lineEdit->clear();
 }
@@ -64,4 +69,7 @@ void QTChat::clearAll() {
   listView->addItem(itemO1);
 }
 
-QTChat::~QTChat() { delete listView; delete lineEdit; }
+QTChat::~QTChat() {
+  delete listView;
+  delete lineEdit;
+}

@@ -26,7 +26,7 @@ target_link_libraries(message_app
         network_lib
         ui
         utils
-        chatlib
+        libchat
 )
 
 

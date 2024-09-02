@@ -29,9 +29,10 @@ private:
 public:
   explicit ApplicationMain(QWidget *parent = Q_NULLPTR);
 
-  void OnMessage(std::string message);
   void handle();
   void listen();
+
+  void disconnect();
 };
 
 #endif // TEST_QT5_APPLICATIONMAIN_H

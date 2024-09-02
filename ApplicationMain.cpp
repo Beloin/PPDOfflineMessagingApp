@@ -1,4 +1,5 @@
 #include "ApplicationMain.h"
+#include "MessageService.hpp"
 #include "ui/QTContacts.hpp"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
@@ -11,6 +12,7 @@
 #include <QListWidgetItem>
 #include <QMessageBox>
 #include <QPushButton>
+#include <qwidget.h>
 
 ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   // setFixedSize(1200, 800);
@@ -30,8 +32,9 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   auto mainHorizontalBox = new QHBoxLayout();
   // TODO: Create a way to change chats when clicked in contacts ->
   // onContactClick
-  pChat = new Ui::QTChat();
-  pContacts = new Ui::QTContacts();
+  Chat::MessageService msgService{_serverCon};
+  pChat = new Ui::QTChat(msgService);
+  pContacts = new Ui::QTContacts(/* onContactUpdate */);
   mainHorizontalBox->addItem(pChat);
   mainHorizontalBox->addItem(pContacts);
   mainHorizontalBox->addItem(vbox);
@@ -42,7 +45,12 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
 void ApplicationMain::handle() {
   auto ok2 = connectionDialog();
   if (ok2) {
-    _serverCon.ConnectTo(serverAddress, "22222");
+    auto res = _serverCon.ConnectTo(serverAddress, "22222");
+    if (res) {
+      QMessageBox messageBox;
+      messageBox.critical(this, "Error", "Could not connect to server");
+      return;
+    }
     clientListen = std::thread{&ApplicationMain::listen, this};
     clientListen.detach();
   }
@@ -77,9 +85,10 @@ bool ApplicationMain::connectionDialog() {
   return false;
 }
 
-void ApplicationMain::OnMessage(std::string message) {}
-void ApplicationMain::listen()
-{
-
+void ApplicationMain::listen() {
+  // Configure callbacks
+  _serverCon.addOnMessage([this](std::string const &message) -> void {
+    pChat->addOtherMessage(message);
+  });
+  _serverCon.listen();
 }
-

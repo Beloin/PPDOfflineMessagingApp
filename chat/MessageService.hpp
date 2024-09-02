@@ -1,28 +1,30 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File:        MessageService.hpp
 // Author:      MyName
-// Description:       
+// Description:
 ////////////////////////////////////////////////////////////////////////////////
 #ifndef CHAT_MESSAGESERVICE_H
 #define CHAT_MESSAGESERVICE_H
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "ServerConnection.hpp"
 namespace Chat {
 
 //------------------------------------------------------------------------------
 
-class MessageService
-{
+class MessageService {
 
 public:
-    MessageService() = default;
-    ~MessageService() = default; 
+  MessageService(ServerConnection &serverConnection)
+      : serverConnection(serverConnection) {}
+
+  void addMessage(const std::string &contact, const std::string &message);
 
 private:
-
+  ServerConnection &serverConnection;
 };
 
 //------------------------------------------------------------------------------
 
-}
+} // namespace Chat
 #endif /* CHAT_MESSAGESERVICE_H */

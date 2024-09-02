@@ -3,6 +3,11 @@ add_library(
         ContactsService.hpp
         MessageService.hpp
         ServerConnection.hpp
+
+        # ContactsService.cpp
+        MessageService.cpp
+        ServerConnection.cpp
+
 )
 
 target_link_libraries(libchat)

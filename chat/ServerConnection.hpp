@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "../network/client.h"
+#include <functional>
+#include <iostream>
 #include <string>
 
 namespace Chat {
@@ -15,7 +17,9 @@ namespace Chat {
 using ConstString = std::string const &;
 typedef std::string const &MyStr;
 
-typedef void (*OnMessage)(ConstString message);
+// typedef void (*OnMessage)(ConstString message);
+// Enables caputuring lambdas
+typedef std::function<void(ConstString)> OnMessage;
 
 //------------------------------------------------------------------------------
 

@@ -10,6 +10,7 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QVBoxLayout>
+#include "MessageService.hpp"
 
 namespace Ui {
 
@@ -19,7 +20,7 @@ namespace Ui {
 class QTChat : public QVBoxLayout {
 
 public:
-  QTChat();
+  QTChat(Chat::MessageService &messageService);
   ~QTChat();
 
   QListWidget *listView;
@@ -34,6 +35,8 @@ public:
 
 private:
   QLineEdit *lineEdit;
+
+  Chat::MessageService &messageService;
 };
 
 //------------------------------------------------------------------------------

@@ -66,3 +66,5 @@ void Chat::ServerConnection::callOnMessage(Chat::ConstString str) {
     chatCallable(str);
   }
 }
+
+void Chat::ServerConnection::addOnMessage(OnMessage cb) { chatCallable = cb; }
