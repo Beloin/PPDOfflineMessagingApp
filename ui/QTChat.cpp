@@ -55,6 +55,7 @@ void QTChat::sendMessage() {
 
   // TODO: Add contact as constructor parameter
   std::string contact{"mycontact"};
+  // TODO: server_fd is somehow wrong here -> Memory leak?
   messageService.addMessage(contact, basicString);
 
   lineEdit->clear();

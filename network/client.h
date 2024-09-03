@@ -13,6 +13,7 @@ class Client {
 
 protected:
   bool hasConnected = false;
+  std::string defRes;
   int server_fd{};
 
   std::string server_addr;

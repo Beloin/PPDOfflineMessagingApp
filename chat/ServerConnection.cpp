@@ -58,10 +58,12 @@ void Chat::ServerConnection::listen() {
     callOnMessage(std::string{buffer});
   }
 
-  std::cout << "Connection closed" << std::endl;
+  std::cout << "Connection closed..." << std::endl;
+  disconnect();
 }
 
 void Chat::ServerConnection::callOnMessage(Chat::ConstString str) {
+  std::cout << "Recieved message" << std::endl;
   if (chatCallable != nullptr) {
     chatCallable(str);
   }

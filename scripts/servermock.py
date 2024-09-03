@@ -7,14 +7,12 @@ server.listen()
 conn, addr = server.accept()
 with conn:
     print(f"Connected by {addr}")
-    while True:
-        data = conn.recv(1 + 256)
-        if not data:
-            break
-
+    # while True:
+    data = conn.recv(1 + 256)
+    if data:
         print("Recv:", data.decode())
         st = "Hello from python"
-        for i in range(255 - len(st)):
+        for i in range(256 - len(st)):
             st += "\0"
         bts = st.encode()
         conn.sendall(bts)

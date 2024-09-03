@@ -70,7 +70,10 @@ int Client::ConnectToServer(std::string const &host, std::string const &port) {
   return 0;
 }
 
-Network::Client::~Client() { close(server_fd); }
+Network::Client::~Client() {
+  std::cout << "Killing server conection";
+  close(server_fd);
+}
 
 bool Network::Client::IsConnected() const { return hasConnected; }
 

@@ -67,4 +67,6 @@ void QTContacts::onContactClick(QListWidgetItem *item) {
   // TODO: Here change the chat item
   std::cout << "Hello From " << "ui/QTContacts.cpp" << std::endl;
   item->setText("You clicked me!");
+
+
 }
