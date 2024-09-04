@@ -14,12 +14,13 @@
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <thread>
+#include <unordered_map>
 
 class ApplicationMain : public QMainWindow {
 
 private:
-  bool connectionDialog();
   Ui::QTChat *pChat;
+  Ui::QTChat *ptest1Chat;
   Ui::QTContacts *pContacts;
 
   Chat::ServerConnection _serverCon{};
@@ -27,6 +28,12 @@ private:
 
   std::string serverAddress;
   std::thread clientListen;
+
+  // TODO: Instead of creating a list of chats, make it easier using a list of
+  // messages
+  std::unordered_map<std::string, std::vector<std::string>> chatMap{};
+
+  bool connectionDialog();
 
 public:
   explicit ApplicationMain(QWidget *parent = Q_NULLPTR);

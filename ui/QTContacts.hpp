@@ -15,11 +15,13 @@ namespace Ui {
 
 //------------------------------------------------------------------------------
 
+using OnContactChange = std::function<void(std::string &)>;
+
 // TODO: Create contact selection
 class QTContacts : public QVBoxLayout {
 
 public:
-  QTContacts();
+  QTContacts(OnContactChange);
   ~QTContacts();
 
 private:
@@ -32,6 +34,8 @@ private:
   void addContact(std::string const &);
 
   void onContactClick(QListWidgetItem *);
+
+  OnContactChange pCallback{nullptr};
 };
 
 //------------------------------------------------------------------------------

@@ -7,10 +7,10 @@
 #define UI_QTCHAT_H
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "MessageService.hpp"
 #include <QLineEdit>
 #include <QListWidget>
 #include <QVBoxLayout>
-#include "MessageService.hpp"
 
 namespace Ui {
 
@@ -20,11 +20,13 @@ namespace Ui {
 class QTChat : public QVBoxLayout {
 
 public:
-  int test_fd;
-  QTChat(Chat::MessageService &messageService);
+  QTChat(std::string &name, Chat::MessageService &messageService);
   ~QTChat();
 
   QListWidget *listView;
+  std::string contactName;
+  // TODO: Reset message list after each iteration
+  std::vector<std::string> &messages;
 
   void sendMessage();
 

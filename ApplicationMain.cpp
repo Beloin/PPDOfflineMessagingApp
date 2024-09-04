@@ -1,5 +1,6 @@
 #include "ApplicationMain.h"
 #include "MessageService.hpp"
+#include "ui/QTChat.hpp"
 #include "ui/QTContacts.hpp"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
@@ -13,6 +14,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <qwidget.h>
+#include <vector>
 
 ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   // setFixedSize(1200, 800);
@@ -32,8 +34,21 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   auto mainHorizontalBox = new QHBoxLayout();
   // TODO: Create a way to change chats when clicked in contacts ->
   // onContactClick
-  pChat = new Ui::QTChat(msgService);
-  pContacts = new Ui::QTContacts(/* onContactUpdate */);
+  std::string chatName = "empty_chat";
+  // TODO: Create a mock qtchat to be as empty contact
+  pChat = new Ui::QTChat(chatName, msgService);
+
+  pContacts = new Ui::QTContacts([this, &mainHorizontalBox](std::string &str) {
+    auto found = chatMap.find(str);
+    if (found != chatMap.end()) {
+      // pChat = found->second;
+    } else {
+      auto newMap = new Ui::QTChat(str, msgService);
+      chatMap.insert({str, std::vector<std::string>{}});
+    }
+
+  });
+
   mainHorizontalBox->addItem(pChat);
   mainHorizontalBox->addItem(pContacts);
   mainHorizontalBox->addItem(vbox);

@@ -3,14 +3,20 @@
 #include <QAbstractButton>
 #include <QLineEdit>
 #include <QPushButton>
+#include <sstream>
 #include <string>
 
 using namespace Ui;
 
-QTChat::QTChat(Chat::MessageService &messageService)
-    : messageService(messageService) {
+// TODO: Add map to qtchat and use vector list to clear and create
+//   std::unordered_map<std::string, std::vector<std::string>> chatMap{};
+QTChat::QTChat(std::string &name, Chat::MessageService &messageService)
+    : messageService(messageService), contactName(name) {
   listView = new QListWidget();
-  auto *itemO1 = new QListWidgetItem("Write message");
+  std::ostringstream st{};
+  auto title = "Write message to \"";
+  st << title << contactName << "\" i";
+  auto *itemO1 = new QListWidgetItem(QString::fromStdString(st.str()));
   itemO1->setBackground(Qt::lightGray);
   itemO1->setTextAlignment(Qt::AlignCenter);
   listView->addItem(itemO1);
@@ -53,10 +59,7 @@ void QTChat::sendMessage() {
   const std::string &basicString = string.toStdString();
   addUserMessage(basicString);
 
-  // TODO: Add contact as constructor parameter
-  std::string contact{"mycontact"};
-  // TODO: server_fd is somehow wrong here -> Memory leak?
-  messageService.addMessage(contact, basicString);
+  messageService.addMessage(contactName, basicString);
 
   lineEdit->clear();
 }

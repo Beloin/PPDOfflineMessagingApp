@@ -8,7 +8,8 @@
 
 using namespace Ui;
 
-QTContacts::QTContacts() {
+QTContacts::QTContacts(OnContactChange onContactChange)
+    : pCallback(onContactChange) {
   listView = new QListWidget();
   connect(listView, &QListWidget::itemClicked, this,
           &QTContacts::onContactClick);
@@ -65,8 +66,11 @@ void QTContacts::onContactClick(QListWidgetItem *item) {
   }
 
   // TODO: Here change the chat item
-  std::cout << "Hello From " << "ui/QTContacts.cpp" << std::endl;
-  item->setText("You clicked me!");
+  // std::cout << "Hello From " << "ui/QTContacts.cpp" << std::endl;
+  // item->setText("You clicked me!");
+  std::string contactName = item->text().toStdString();
+  std::cout << "Clicked on: " << contactName << std::endl;
 
-
+  if (pCallback)
+    pCallback(contactName);
 }
