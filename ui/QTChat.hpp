@@ -20,6 +20,7 @@ namespace Ui {
 class QTChat : public QVBoxLayout {
 
 public:
+  int test_fd;
   QTChat(Chat::MessageService &messageService);
   ~QTChat();
 

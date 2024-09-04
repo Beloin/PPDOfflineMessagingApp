@@ -32,7 +32,6 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   auto mainHorizontalBox = new QHBoxLayout();
   // TODO: Create a way to change chats when clicked in contacts ->
   // onContactClick
-  Chat::MessageService msgService{_serverCon};
   pChat = new Ui::QTChat(msgService);
   pContacts = new Ui::QTContacts(/* onContactUpdate */);
   mainHorizontalBox->addItem(pChat);

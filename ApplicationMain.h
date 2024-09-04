@@ -21,7 +21,9 @@ private:
   bool connectionDialog();
   Ui::QTChat *pChat;
   Ui::QTContacts *pContacts;
+
   Chat::ServerConnection _serverCon{};
+  Chat::MessageService msgService{_serverCon};
 
   std::string serverAddress;
   std::thread clientListen;
