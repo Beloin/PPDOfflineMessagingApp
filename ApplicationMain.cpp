@@ -47,6 +47,8 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
       chatMap.insert({str, std::vector<std::string>{}});
     }
 
+    pChat.resetChat(str);
+
   });
 
   mainHorizontalBox->addItem(pChat);
