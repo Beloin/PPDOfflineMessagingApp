@@ -24,10 +24,13 @@ with conn:
     print("Message: ", data2.decode())
 
 
+chatMessages = {}
+
 def accept_connection(conn: socket.socket):
     contact = conn.recv(256)
-    to = conn.recv(256)
-    message = conn.recv(256)
+    while True:
+        to = conn.recv(256)
+        message = conn.recv(256)
 
 if __name__ == "__main__":
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
