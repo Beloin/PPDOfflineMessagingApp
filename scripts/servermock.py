@@ -1,4 +1,5 @@
 import socket
+import threading
 
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,9 +24,10 @@ with conn:
     print("Message: ", data2.decode())
 
 
-def accept_connection(con: socket.socket):
-    pass
-
+def accept_connection(conn: socket.socket):
+    contact = conn.recv(256)
+    to = conn.recv(256)
+    message = conn.recv(256)
 
 if __name__ == "__main__":
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -33,3 +35,5 @@ if __name__ == "__main__":
     server.listen()
     while True:
         conn, addr = server.accept()
+        thd = threading.Thread(target=accept_connection, args=(conn))
+        thd.start()
