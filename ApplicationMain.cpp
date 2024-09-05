@@ -32,24 +32,11 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   vbox->addItem(hbox);
 
   auto mainHorizontalBox = new QHBoxLayout();
-  // TODO: Create a way to change chats when clicked in contacts ->
-  // onContactClick
   std::string chatName = "empty_chat";
-  // TODO: Create a mock qtchat to be as empty contact
   pChat = new Ui::QTChat(chatName, msgService);
 
-  pContacts = new Ui::QTContacts([this, &mainHorizontalBox](std::string &str) {
-    auto found = chatMap.find(str);
-    if (found != chatMap.end()) {
-      // pChat = found->second;
-    } else {
-      auto newMap = new Ui::QTChat(str, msgService);
-      chatMap.insert({str, std::vector<std::string>{}});
-    }
-
-    pChat.resetChat(str);
-
-  });
+  pContacts = new Ui::QTContacts(
+      [this, &mainHorizontalBox](std::string &str) { pChat->clearAll(str); });
 
   mainHorizontalBox->addItem(pChat);
   mainHorizontalBox->addItem(pContacts);
@@ -103,8 +90,13 @@ bool ApplicationMain::connectionDialog() {
 
 void ApplicationMain::listen() {
   // Configure callbacks
-  _serverCon.addOnMessage([this](std::string const &message) -> void {
-    pChat->addOtherMessage(message);
-  });
+  _serverCon.addOnMessage(
+      [this](std::string const &contact, std::string const &message) -> void {
+        pChat->addOtherMessage(contact, message);
+      });
   _serverCon.listen();
+}
+
+void ApplicationMain::handleOffline() {
+
 }

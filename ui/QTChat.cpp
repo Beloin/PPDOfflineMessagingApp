@@ -3,8 +3,10 @@
 #include <QAbstractButton>
 #include <QLineEdit>
 #include <QPushButton>
+#include <qstringview.h>
 #include <sstream>
 #include <string>
+#include <vector>
 
 using namespace Ui;
 
@@ -13,10 +15,8 @@ using namespace Ui;
 QTChat::QTChat(std::string &name, Chat::MessageService &messageService)
     : messageService(messageService), contactName(name) {
   listView = new QListWidget();
-  std::ostringstream st{};
-  auto title = "Write message to \"";
-  st << title << contactName << "\" i";
-  auto *itemO1 = new QListWidgetItem(QString::fromStdString(st.str()));
+  auto *itemO1 =
+      new QListWidgetItem(QString::fromStdString(generateFirstLine()));
   itemO1->setBackground(Qt::lightGray);
   itemO1->setTextAlignment(Qt::AlignCenter);
   listView->addItem(itemO1);
@@ -36,6 +36,13 @@ QTChat::QTChat(std::string &name, Chat::MessageService &messageService)
   QBoxLayout::addItem(hbox);
 }
 
+std::string QTChat::generateFirstLine() {
+  std::ostringstream st{};
+  auto title = "Write message to \"";
+  st << title << contactName << "\" i";
+  return st.str();
+}
+
 void QTChat::addUserMessage(const std::string &msg) {
   auto *message = new QListWidgetItem(QString::fromStdString(msg));
   message->setBackground(QColor(0x96, 0x96, 0xFF));
@@ -43,7 +50,10 @@ void QTChat::addUserMessage(const std::string &msg) {
   listView->addItem(message);
 }
 
-void QTChat::addOtherMessage(const std::string &msg) {
+void QTChat::addOtherMessage(const std::string &contact, const std::string &msg) {
+  if (contactName != contact) {
+    return;
+  }
   auto *message = new QListWidgetItem(QString::fromStdString(msg));
   message->setBackground(QColor(0xFF, 0x9D, 0x96));
   message->setTextAlignment(Qt::AlignRight);
@@ -64,10 +74,11 @@ void QTChat::sendMessage() {
   lineEdit->clear();
 }
 
-void QTChat::clearAll() {
+void QTChat::clearAll(std::string &newCon) {
   listView->clear();
-
-  auto *itemO1 = new QListWidgetItem("Write message");
+  contactName = newCon;
+  auto *itemO1 =
+      new QListWidgetItem(QString::fromStdString(generateFirstLine()));
   itemO1->setBackground(Qt::lightGray);
   itemO1->setTextAlignment(Qt::AlignCenter);
   listView->addItem(itemO1);

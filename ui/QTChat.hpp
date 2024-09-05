@@ -11,6 +11,7 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QVBoxLayout>
+#include <vector>
 
 namespace Ui {
 
@@ -25,21 +26,20 @@ public:
 
   QListWidget *listView;
   std::string contactName;
-  // TODO: Reset message list after each iteration
-  std::vector<std::string> &messages;
-
   void sendMessage();
 
   void addUserMessage(const std::string &);
 
-  void addOtherMessage(const std::string &msg);
+  void addOtherMessage(std::string const&contact, const std::string &msg);
 
-  void clearAll();
+  void clearAll(std::string &newContact);
 
 private:
   QLineEdit *lineEdit;
 
   Chat::MessageService &messageService;
+
+  std::string generateFirstLine();
 };
 
 //------------------------------------------------------------------------------

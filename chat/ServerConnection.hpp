@@ -19,7 +19,7 @@ typedef std::string const &MyStr;
 
 // typedef void (*OnMessage)(ConstString message);
 // Enables caputuring lambdas
-typedef std::function<void(ConstString)> OnMessage;
+typedef std::function<void(ConstString, ConstString)> OnMessage;
 
 //------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ public:
   void addOnMessage(OnMessage);
 
 private:
-  void callOnMessage(ConstString str);
+  void callOnMessage(Chat::ConstString contactName, Chat::ConstString message);
   OnMessage chatCallable{nullptr};
 };
 

@@ -51,21 +51,27 @@ void Chat::ServerConnection::listen() {
   char buffer[256]; // High to receive TEXT
   ssize_t status = 1;
   while (status && hasConnected) {
+    // First 256 bytes is contact name
     status = internalReadBytes((unsigned char *)buffer, 256);
+    auto contactName = std::string{buffer};
+    if (status <= 0)
+      break;
+    status = internalReadBytes((unsigned char *)buffer, 256);
+    auto message = std::string{buffer};
     if (status <= 0)
       break;
 
-    callOnMessage(std::string{buffer});
+    callOnMessage(contactName, message);
   }
 
   std::cout << "Connection closed..." << std::endl;
   disconnect();
 }
 
-void Chat::ServerConnection::callOnMessage(Chat::ConstString str) {
+void Chat::ServerConnection::callOnMessage(Chat::ConstString contactName, Chat::ConstString message) {
   std::cout << "Recieved message" << std::endl;
   if (chatCallable != nullptr) {
-    chatCallable(str);
+    chatCallable(contactName, message);
   }
 }
 
