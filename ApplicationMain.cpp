@@ -14,7 +14,11 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <qwidget.h>
+#include <random>
+#include <sstream>
 #include <vector>
+
+std::string getRandomString(int len);
 
 ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   // setFixedSize(1200, 800);
@@ -48,7 +52,7 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
 void ApplicationMain::handle() {
   auto ok2 = connectionDialog();
   if (ok2) {
-    auto res = _serverCon.ConnectTo(serverAddress, "22222");
+    auto res = _serverCon.ConnectTo(serverAddress, "22223");
     if (res) {
       QMessageBox messageBox;
       messageBox.critical(this, "Error", "Could not connect to server");
@@ -64,10 +68,14 @@ bool ApplicationMain::connectionDialog() {
   QFormLayout form(&dialog);
 
   form.addRow(new QLabel("End. do Servidor:"));
-
   auto *serverAddressField = new QLineEdit(&dialog);
   serverAddressField->setText("localhost");
   form.addRow(serverAddressField);
+
+  form.addRow(new QLabel("Seu Nome:"));
+  auto *clientNameField = new QLineEdit(&dialog);
+  clientNameField->setText("Juan");
+  form.addRow(clientNameField);
 
   QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                              Qt::Horizontal, &dialog);
@@ -77,11 +85,13 @@ bool ApplicationMain::connectionDialog() {
   QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
   if (dialog.exec() == QDialog::Accepted) {
-    if (serverAddressField->text().isEmpty()) {
+    if (serverAddressField->text().isEmpty() ||
+        clientNameField->text().isEmpty()) {
       return false;
     }
 
     serverAddress = serverAddressField->text().toStdString();
+    clientName = clientNameField->text().toStdString();
     return true;
   }
 
@@ -90,6 +100,10 @@ bool ApplicationMain::connectionDialog() {
 
 void ApplicationMain::listen() {
   // Configure callbacks
+  auto hasRegistered = _serverCon.registerClient(clientName);
+  if (!hasRegistered) {
+    std::cout << "error while registering" << std::endl;
+  }
   _serverCon.addOnMessage(
       [this](std::string const &contact, std::string const &message) -> void {
         pChat->addOtherMessage(contact, message);
@@ -97,6 +111,22 @@ void ApplicationMain::listen() {
   _serverCon.listen();
 }
 
-void ApplicationMain::handleOffline() {
+void ApplicationMain::handleOffline() { _serverCon.disconnect(); }
 
+std::random_device dev;
+std::mt19937 rng(dev());
+std::string getRandomString(int len) {
+  static const char alphanum[] = "0123456789"
+                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                 "abcdefghijklmnopqrstuvwxyz";
+  std::string tmp_s;
+  tmp_s.reserve(len);
+
+  std::uniform_int_distribution<std::mt19937::result_type> dist6(
+      1, sizeof(alphanum) - 1);
+  for (int i = 0; i < len; ++i) {
+    tmp_s += alphanum[dist6(rng)];
+  }
+
+  return tmp_s;
 }

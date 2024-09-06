@@ -18,9 +18,7 @@ bool Chat::ServerConnection::sendMessage(ConstString message,
     normalizedContact += '\0';
   }
 
-  // TODO: validate
-  auto status = internalSendBytes(std::string{2}, 1);
-  status = internalSendBytes(normalizedContact, 256);
+  auto status = internalSendBytes(normalizedContact, 256);
   status = internalSendBytes(normalizedMessage, 256);
 
   return status > 0;
@@ -33,13 +31,11 @@ bool Chat::ServerConnection::registerClient(ConstString myClientName) {
   }
 
   std::string result{myClientName};
-  for (int i = result.length(); i < 255; i++) {
+  for (int i = result.length(); i < 256; i++) {
     result += '\0';
   }
 
-  // TODO: validate
-  auto status = internalSendBytes(std::string{1}, 1);
-  status = internalSendBytes(result, 256);
+  auto status = internalSendBytes(result, 256);
 
   return status > 0;
 }
