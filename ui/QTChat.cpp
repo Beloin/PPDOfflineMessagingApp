@@ -10,8 +10,6 @@
 
 using namespace Ui;
 
-// TODO: Add map to qtchat and use vector list to clear and create
-//   std::unordered_map<std::string, std::vector<std::string>> chatMap{};
 QTChat::QTChat(std::string &name, Chat::MessageService &messageService)
     : messageService(messageService), contactName(name) {
   listView = new QListWidget();
@@ -38,8 +36,8 @@ QTChat::QTChat(std::string &name, Chat::MessageService &messageService)
 
 std::string QTChat::generateFirstLine() {
   std::ostringstream st{};
-  auto title = "Write message to \"";
-  st << title << contactName << "\" i";
+  auto title = "Write message to ";
+  st << title << contactName;
   return st.str();
 }
 

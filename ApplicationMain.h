@@ -21,6 +21,7 @@ private:
   Ui::QTChat *pChat;
   Ui::QTChat *ptest1Chat;
   Ui::QTContacts *pContacts;
+  QLabel *nameLabel;
 
   Chat::ServerConnection _serverCon{};
   Chat::MessageService msgService{_serverCon};

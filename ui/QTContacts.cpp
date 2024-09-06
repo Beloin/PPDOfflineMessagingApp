@@ -14,7 +14,7 @@ QTContacts::QTContacts(OnContactChange onContactChange)
   connect(listView, &QListWidget::itemClicked, this,
           &QTContacts::onContactClick);
 
-  auto *itemO1 = new QListWidgetItem("Add contact \"name,host[,port]\" ");
+  auto *itemO1 = new QListWidgetItem("Add contact Name");
   itemO1->setBackground(Qt::lightGray);
   itemO1->setTextAlignment(Qt::AlignCenter);
   listView->addItem(itemO1);
@@ -65,9 +65,6 @@ void QTContacts::onContactClick(QListWidgetItem *item) {
     return;
   }
 
-  // TODO: Here change the chat item
-  // std::cout << "Hello From " << "ui/QTContacts.cpp" << std::endl;
-  // item->setText("You clicked me!");
   std::string contactName = item->text().toStdString();
   std::cout << "Clicked on: " << contactName << std::endl;
 

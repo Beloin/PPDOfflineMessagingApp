@@ -26,6 +26,7 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   setLayoutDirection(Qt::RightToLeft);
   auto scene = new QGraphicsScene{this};
   auto button = new QPushButton("Connect");
+  nameLabel = new QLabel("Hello user, please connect!");
   connect(button, &QPushButton::released, this, &ApplicationMain::handle);
 
   auto mainWidget = new QWidget();
@@ -33,7 +34,9 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   hbox->addWidget(button);
 
   auto vbox = new QVBoxLayout();
+  vbox->setAlignment(Qt::AlignCenter);
   vbox->addItem(hbox);
+  vbox->addWidget(nameLabel);
 
   auto mainHorizontalBox = new QHBoxLayout();
   std::string chatName = "empty_chat";
@@ -100,6 +103,9 @@ bool ApplicationMain::connectionDialog() {
 
 void ApplicationMain::listen() {
   // Configure callbacks
+  std::ostringstream a;
+  a << "Hello, " << clientName;
+  nameLabel->setText(QString::fromStdString(a.str()));
   auto hasRegistered = _serverCon.registerClient(clientName);
   if (!hasRegistered) {
     std::cout << "error while registering" << std::endl;
