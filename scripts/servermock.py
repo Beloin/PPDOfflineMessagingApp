@@ -41,12 +41,18 @@ def send_message(fromm, to, message):
         msgs["pending_messages"].append((fromm, msg))
         return
 
-    conn = msgs["conn"]
-    bts = fromm.encode()
-    conn.sendall(bts)
+    try:
+        conn = msgs["conn"]
+        bts = fromm.encode()
+        conn.sendall(bts)
 
-    bts = msg.encode()
-    conn.sendall(bts)
+        bts = msg.encode()
+        conn.sendall(bts)
+    except Exception as e:
+        client_offline(to)
+        msgs["pending_messages"].append((fromm, msg))
+        return
+
 
 
 def accept_connection(conn: socket.socket):
