@@ -34,12 +34,17 @@ public:
 
   void clearAll(std::string &newContact);
 
+  std::unordered_map<std::string, std::vector<std::string>> buffer{};
+
 private:
   QLineEdit *lineEdit;
 
   Chat::MessageService &messageService;
 
   std::string generateFirstLine();
+
+
+  void addToBuffer(const std::string &, const std::string&);
 };
 
 //------------------------------------------------------------------------------

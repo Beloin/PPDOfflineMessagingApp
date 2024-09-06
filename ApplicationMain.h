@@ -27,7 +27,7 @@ private:
   Chat::MessageService msgService{_serverCon};
 
   std::string serverAddress;
-  std::string clientName;
+  std::string clientName{"Juan"};
   std::thread clientListen;
 
   bool connectionDialog();

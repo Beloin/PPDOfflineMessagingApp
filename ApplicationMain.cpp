@@ -43,7 +43,7 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   pChat = new Ui::QTChat(chatName, msgService);
 
   pContacts = new Ui::QTContacts(
-      [this, &mainHorizontalBox](std::string &str) { pChat->clearAll(str); });
+      [this, &mainHorizontalBox](std::string &newContact) { pChat->clearAll(newContact); });
 
   mainHorizontalBox->addItem(pChat);
   mainHorizontalBox->addItem(pContacts);
@@ -77,7 +77,7 @@ bool ApplicationMain::connectionDialog() {
 
   form.addRow(new QLabel("Seu Nome:"));
   auto *clientNameField = new QLineEdit(&dialog);
-  clientNameField->setText("Juan");
+  clientNameField->setText(QString::fromStdString(clientName));
   form.addRow(clientNameField);
 
   QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,

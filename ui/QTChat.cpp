@@ -48,14 +48,26 @@ void QTChat::addUserMessage(const std::string &msg) {
   listView->addItem(message);
 }
 
-void QTChat::addOtherMessage(const std::string &contact, const std::string &msg) {
+void QTChat::addOtherMessage(const std::string &contact,
+                             const std::string &msg) {
   if (contactName != contact) {
+    addToBuffer(contact, msg);
     return;
   }
   auto *message = new QListWidgetItem(QString::fromStdString(msg));
   message->setBackground(QColor(0xFF, 0x9D, 0x96));
   message->setTextAlignment(Qt::AlignRight);
   listView->addItem(message);
+}
+
+void QTChat::addToBuffer(const std::string &contact,
+                         const std::string &message) {
+  auto con = buffer.find(contact);
+  if (con != buffer.end()) {
+    con->second.push_back(message);
+  } else {
+    buffer.insert({contact, std::vector<std::string>{}});
+  }
 }
 
 void QTChat::sendMessage() {
@@ -77,9 +89,23 @@ void QTChat::clearAll(std::string &newCon) {
   contactName = newCon;
   auto *itemO1 =
       new QListWidgetItem(QString::fromStdString(generateFirstLine()));
+
   itemO1->setBackground(Qt::lightGray);
   itemO1->setTextAlignment(Qt::AlignCenter);
   listView->addItem(itemO1);
+
+  auto con = buffer.find(newCon);
+  if (con != buffer.end()) {
+    for (auto &str : con->second) {
+      auto *message = new QListWidgetItem(QString::fromStdString(str));
+      message->setBackground(QColor(0xFF, 0x9D, 0x96));
+      message->setTextAlignment(Qt::AlignRight);
+      listView->addItem(message);
+    }
+
+    con->second.clear();
+  }
+
 }
 
 QTChat::~QTChat() {
