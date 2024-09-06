@@ -36,7 +36,6 @@ public:
   explicit ApplicationMain(QWidget *parent = Q_NULLPTR);
 
   void handle();
-  void handleOffline();
   void listen();
 
   void disconnect();

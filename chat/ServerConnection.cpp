@@ -61,7 +61,6 @@ void Chat::ServerConnection::listen() {
   }
 
   std::cout << "Connection closed..." << std::endl;
-  disconnect();
 }
 
 void Chat::ServerConnection::callOnMessage(Chat::ConstString contactName, Chat::ConstString message) {

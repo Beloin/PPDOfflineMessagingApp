@@ -3,6 +3,7 @@ import threading
 
 chatMessages = {}
 
+
 def register_and_check_messages(name, conn):
     msgs = chatMessages.get(name)
     if msgs is None:
@@ -67,18 +68,22 @@ def accept_connection(conn: socket.socket):
             conn.sendall(bts)
 
     while True:
-        to = conn.recv(256)
-        if not to:
-            client_offline(contact)
-            return
-        print("To: ", to.decode())
-        contact_message = conn.recv(256)
-        if not contact_message:
-            client_offline(contact)
-            return
-        print("Message: ", contact_message.decode())
+        try:
+            to = conn.recv(256)
+            if not to:
+                client_offline(contact)
+                return
+            print("To: ", to.decode())
+            contact_message = conn.recv(256)
+            if not contact_message:
+                client_offline(contact)
+                return
+            print("Message: ", contact_message.decode())
 
-        send_message(contact, to.decode(), contact_message.decode())
+            send_message(contact, to.decode(), contact_message.decode())
+        except Exception as e:
+            client_offline(contact)
+            return
 
 
 thds = []

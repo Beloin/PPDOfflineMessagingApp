@@ -26,12 +26,18 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   setLayoutDirection(Qt::RightToLeft);
   auto scene = new QGraphicsScene{this};
   auto button = new QPushButton("Connect");
+
+  // TODO: Cannot use disconnect button in the right form
+  auto disconnectButton = new QPushButton("Disconnect");
   nameLabel = new QLabel("Hello user, please connect!");
   connect(button, &QPushButton::released, this, &ApplicationMain::handle);
+  connect(disconnectButton, &QPushButton::released, this,
+          &ApplicationMain::disconnect);
 
   auto mainWidget = new QWidget();
   auto hbox = new QHBoxLayout();
   hbox->addWidget(button);
+  hbox->addWidget(disconnectButton);
 
   auto vbox = new QVBoxLayout();
   vbox->setAlignment(Qt::AlignCenter);
@@ -42,8 +48,10 @@ ApplicationMain::ApplicationMain(QWidget *parent) : QMainWindow(parent) {
   std::string chatName = "empty_chat";
   pChat = new Ui::QTChat(chatName, msgService);
 
-  pContacts = new Ui::QTContacts(
-      [this, &mainHorizontalBox](std::string &newContact) { pChat->clearAll(newContact); });
+  pContacts =
+      new Ui::QTContacts([this, &mainHorizontalBox](std::string &newContact) {
+        pChat->clearAll(newContact);
+      });
 
   mainHorizontalBox->addItem(pChat);
   mainHorizontalBox->addItem(pContacts);
@@ -117,7 +125,14 @@ void ApplicationMain::listen() {
   _serverCon.listen();
 }
 
-void ApplicationMain::handleOffline() { _serverCon.disconnect(); }
+void ApplicationMain::disconnect() {
+  _serverCon.disconnect();
+  std::string temp = "Disconnected";
+  pChat->clearAll(temp);
+  std::ostringstream a;
+  a << "Hello, " << clientName << ". Please connect";
+  nameLabel->setText(QString::fromStdString(a.str()));
+}
 
 std::random_device dev;
 std::mt19937 rng(dev());

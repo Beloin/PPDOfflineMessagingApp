@@ -66,7 +66,7 @@ void QTChat::addToBuffer(const std::string &contact,
   if (con != buffer.end()) {
     con->second.push_back(message);
   } else {
-    buffer.insert({contact, std::vector<std::string>{}});
+    buffer.insert({contact, std::vector<std::string>{message}});
   }
 }
 
